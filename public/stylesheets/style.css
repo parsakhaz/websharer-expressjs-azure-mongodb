@@ -18,5 +18,10 @@ a {
 }
 
 div {
-  padding: 100px
+  padding: 50px
+}
+
+p {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
 }
