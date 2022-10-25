@@ -21,10 +21,18 @@ router.get('/urls/preview', async function (req, res) {
   const OGurl = OGurlElement ? OGurlElement.getAttribute('content') : url
   OGurl ? htmlReturn += '<a href="' + OGurl + '">' : null
 
-
   let titleElement = htmlPage.querySelector('[property="og:title"]')
+  let titleContent = titleElement ? titleElement.getAttribute('content') : null
+  let titleElementFallback = htmlPage.querySelector('title')
+  let titleElementText = titleElementFallback ? htmlPage.querySelector('title').textContent : null
   let title = ''
-  title = titleElement ? titleElement.getAttribute('content') : title = htmlPage.querySelector('title').textContent ? title = title = htmlPage.querySelector('title').textContent : title = url
+  if(titleContent != null || '') {
+    title = titleContent
+  } else if(titleElementText != null || '') {
+    title = titleElementText
+  } else {
+    title = url
+  }
   title ? htmlReturn += '<p><strong>' + title + '</strong></p>' : null
 
   let imageElement = htmlPage.querySelector('[property="og:image"]')
