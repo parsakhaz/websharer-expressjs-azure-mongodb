@@ -9,6 +9,7 @@ router.post('/', async function(req, res, next) {
         const post = new req.models.Post({
             url: req.body.url,
             description: req.body.description,
+            company: req.body.company,
             created_date: Date(),
             content: req.body.type,
             username: req.body.username
@@ -30,6 +31,7 @@ router.get('/', async function(req, res, next) {
             const postJSON = {
                 username: posts[i].username,
                 description: posts[i].description,
+                company: posts[i].company,
                 htmlPreview: postHtmlPreview,
             }
             htmlDescArray.push(postJSON);
