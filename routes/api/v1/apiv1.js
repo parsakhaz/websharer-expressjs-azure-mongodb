@@ -32,7 +32,7 @@ router.get('/urls/preview', async function (req, res) {
     title = titleElementText
   } else {
     title = url
-  }
+  } 
   title ? htmlReturn += '<p><strong>' + title + '</strong></p>' : null
 
   let imageElement = htmlPage.querySelector('[property="og:image"]')
