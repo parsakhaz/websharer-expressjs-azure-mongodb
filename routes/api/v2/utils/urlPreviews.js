@@ -3,6 +3,14 @@ import parser from 'node-html-parser';
 
 
 async function getURLPreview(url) {
+    const escapeHTML = str => str.replace(/[&<>'"]/g,
+        tag => ({
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            "'": '&#39;',
+            '"': '&quot;'
+        }[tag]));
     let output = fetch(url)
         .then(res => res.text())
         .then(pageText => {
@@ -25,17 +33,17 @@ async function getURLPreview(url) {
             } else {
                 title = url
             }
-            title ? htmlReturn += '<p><strong>' + title + '</strong></p>' : null
+            title ? htmlReturn += '<p><strong>' + escapeHTML(title) + '</strong></p>' : null
 
             let imageElement = htmlPage.querySelector('[property="og:image"]')
             const image = imageElement ? imageElement.getAttribute('content') : ''
-            image ? htmlReturn += '<img src="' + image + '" style="max-height: 300px; max-width: 270px;">' : null
+            image ? htmlReturn += '<img src="' + escapeHTML(image) + '" style="max-height: 300px; max-width: 270px;">' : null
 
             htmlReturn += '</a>'
 
             let descriptionElement = htmlPage.querySelector('[property="og:description"]')
             const description = descriptionElement ? descriptionElement.getAttribute('content') : null
-            description ? htmlReturn += '<p>' + description + '</p>' : null
+            description ? htmlReturn += '<p>' + escapeHTML(description) + '</p>' : null
 
             let bootstrapElements = htmlPage.querySelectorAll("link")
             let hasBootstrap = false;
@@ -43,7 +51,7 @@ async function getURLPreview(url) {
             for (let i = 0; i < bootstrapElements.length; i++) {
                 if (bootstrapElements[i].getAttribute('href').includes('css/bootstrap')) {
                     hasBootstrap = true
-                    bootstrap = "<p>Website utilizes bootstrap: " + hasBootstrap + "</p>"
+                    bootstrap = "<p>Website utilizes bootstrap: " + escapeHTML(hasBootstrap) + "</p>"
                 }
             }
             hasBootstrap ? htmlReturn += bootstrap : null

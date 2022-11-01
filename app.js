@@ -29,10 +29,11 @@ app.use((req, res, next) => {
 app.use('/api/v1', apiv1Router);
 app.use('/api/v2', apiv2Router);
 
-let port = process.env.PORT;
-if (port == null || port == "") {
-  port = 8000;
-}
+const port = process.env.port || 8000;
+// let port = process.env.PORT;
+// if (port == null || port == "") {
+//   port = 8080;
+// }
 app.listen(port);
 
 
