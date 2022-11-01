@@ -18,3 +18,10 @@ Nobody helped me with my code.
 
 URL to Heroku deployment:
 https://websharer-parsa.herokuapp.com/
+
+---------------------------------------------------------------------------------------------------------
+
+A4
+
+URL to Azure deployment:
+https://test.parsak.me/
