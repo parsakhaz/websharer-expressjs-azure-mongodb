@@ -19,7 +19,7 @@ async function getURLPreview(url) {
 
             let OGurlElement = htmlPage.querySelector('[property="og:url"]')
             const OGurl = OGurlElement ? OGurlElement.getAttribute('content') : url
-            OGurl ? htmlReturn += '<a href="' + OGurl + '">' : null
+            OGurl ? htmlReturn += '<a href="' + escapeHTML(OGurl.toString()) + '">' : null
 
             let titleElement = htmlPage.querySelector('[property="og:title"]')
             let titleContent = titleElement ? titleElement.getAttribute('content') : null
@@ -33,17 +33,17 @@ async function getURLPreview(url) {
             } else {
                 title = url
             }
-            title ? htmlReturn += '<p><strong>' + escapeHTML(title) + '</strong></p>' : null
+            title ? htmlReturn += '<p><strong>' + escapeHTML(title.toString()) + '</strong></p>' : null
 
             let imageElement = htmlPage.querySelector('[property="og:image"]')
             const image = imageElement ? imageElement.getAttribute('content') : ''
-            image ? htmlReturn += '<img src="' + escapeHTML(image) + '" style="max-height: 300px; max-width: 270px;">' : null
+            image ? htmlReturn += '<img src="' + escapeHTML(image.toString()) + '" style="max-height: 300px; max-width: 270px;">' : null
 
             htmlReturn += '</a>'
 
             let descriptionElement = htmlPage.querySelector('[property="og:description"]')
             const description = descriptionElement ? descriptionElement.getAttribute('content') : null
-            description ? htmlReturn += '<p>' + escapeHTML(description) + '</p>' : null
+            description ? htmlReturn += '<p>' + escapeHTML(description.toString()) + '</p>' : null
 
             let bootstrapElements = htmlPage.querySelectorAll("link")
             let hasBootstrap = false;
@@ -51,7 +51,7 @@ async function getURLPreview(url) {
             for (let i = 0; i < bootstrapElements.length; i++) {
                 if (bootstrapElements[i].getAttribute('href').includes('css/bootstrap')) {
                     hasBootstrap = true
-                    bootstrap = "<p>Website utilizes bootstrap: " + escapeHTML(hasBootstrap) + "</p>"
+                    bootstrap = "<p>Website utilizes bootstrap: " + escapeHTML(hasBootstrap.toString()) + "</p>"
                 }
             }
             hasBootstrap ? htmlReturn += bootstrap : null
