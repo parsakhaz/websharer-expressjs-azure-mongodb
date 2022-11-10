@@ -1,4 +1,4 @@
-A2
+# A2
 
 I added the functionality to check a website link for bootstrap, by checking if it is included in a script. If it is not included, nothing is displayed.
 
@@ -10,7 +10,7 @@ For styling, I made max-width 500px for the main results header in the html, and
 
 ---------------------------------------------------------------------------------------------------------
 
-A3
+# A3
 
 Additional piece of information that I added is the ability to add associated company name.
 
@@ -21,15 +21,22 @@ https://websharer-parsa.herokuapp.com/
 
 ---------------------------------------------------------------------------------------------------------
 
-A4
+# A4
 
 URL to Azure deployment:
 https://test.parsak.me/
 
 ---------------------------------------------------------------------------------------------------------
+
+# A5
+
+redeploy with:
 az webapp up --name websharer-app --logs --launch-browser 
 
-A5
+tested with: 
+https://test.parsak.me/api/v3/users/myIdentity
+https://test.parsak.me/api/v3/posts?username=parsak@uw.edu
+https://test.parsak.me/api/v3/posts?username=kylethayer@uw.edu
 
 URL to Azure deployment:
 https://test.parsak.me/
