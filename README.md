@@ -25,3 +25,11 @@ A4
 
 URL to Azure deployment:
 https://test.parsak.me/
+
+---------------------------------------------------------------------------------------------------------
+az webapp up --name websharer-app --logs --launch-browser 
+
+A5
+
+URL to Azure deployment:
+https://test.parsak.me/

@@ -12,7 +12,7 @@ async function main(){
     const postSchema = new mongoose.Schema({
         url: String,
         description: String,
-        company: String,
+        username: String,
         created_date: Date
     })
     
