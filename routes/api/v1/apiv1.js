@@ -26,13 +26,13 @@ router.get('/urls/preview', async function (req, res) {
   let titleElementFallback = htmlPage.querySelector('title')
   let titleElementText = titleElementFallback ? htmlPage.querySelector('title').textContent : null
   let title = ''
-  if(titleContent != null || '') {
+  if (titleContent != null || '') {
     title = titleContent
-  } else if(titleElementText != null || '') {
+  } else if (titleElementText != null || '') {
     title = titleElementText
   } else {
     title = url
-  } 
+  }
   title ? htmlReturn += '<p><strong>' + title + '</strong></p>' : null
 
   let imageElement = htmlPage.querySelector('[property="og:image"]')
@@ -48,8 +48,8 @@ router.get('/urls/preview', async function (req, res) {
   let bootstrapElements = htmlPage.querySelectorAll("link")
   let hasBootstrap = false;
   let bootstrap = null
-  for(let i = 0; i < bootstrapElements.length; i++) {
-    if(bootstrapElements[i].getAttribute('href').includes('css/bootstrap')) {
+  for (let i = 0; i < bootstrapElements.length; i++) {
+    if (bootstrapElements[i].getAttribute('href').includes('css/bootstrap')) {
       hasBootstrap = true
       bootstrap = "<p>Website utilizes bootstrap: " + hasBootstrap + "</p>"
     }

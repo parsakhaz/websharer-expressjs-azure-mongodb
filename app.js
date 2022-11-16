@@ -7,16 +7,23 @@ import models from './models.js';
 import sessions from 'express-session';
 import msIdExpress from 'microsoft-identity-express'
 const appSettings = {
-  appCredentials: {
-      clientId:  "542b7624-1f17-4cff-9e34-7c778674305e",
-      tenantId:  "f6b6dd5b-f02f-441a-99a0-162ac5060bd2",
-      clientSecret:  "D-I8Q~dzDlYYHN7.LXZXXs2kkXwGyW5pxbHzZbx7"
-  },	
-  authRoutes: {
-      redirect: "https://test.parsak.me/redirect", //note: you can explicitly make this "localhost:3000/redirect" or "examplesite.me/redirect"
-      error: "/error", // the wrapper will redirect to this route in case of any error.
-      unauthorized: "/unauthorized" // the wrapper will redirect to this route in case of unauthorized access attempt.
-  }
+    appCredentials: {
+        clientId: "542b7624-1f17-4cff-9e34-7c778674305e",
+        tenantId: "f6b6dd5b-f02f-441a-99a0-162ac5060bd2",
+        clientSecret: "D-I8Q~dzDlYYHN7.LXZXXs2kkXwGyW5pxbHzZbx7"
+    },
+    // // for local host
+    // authRoutes: {
+    //     redirect: "http://localhost:3000/redirect", //note: you can explicitly make this "localhost:3000/redirect" or "examplesite.me/redirect"
+    //     error: "/error", // the wrapper will redirect to this route in case of any error.
+    //     unauthorized: "/unauthorized" // the wrapper will redirect to this route in case of unauthorized access attempt.
+    // }
+    // for azure hosting 
+    authRoutes: {
+        redirect: "https://test.parsak.me/redirect", //note: you can explicitly make this "localhost:3000/redirect" or "examplesite.me/redirect"
+        error: "/error", // the wrapper will redirect to this route in case of any error.
+        unauthorized: "/unauthorized" // the wrapper will redirect to this route in case of unauthorized access attempt.
+    }
 };
 
 
@@ -44,14 +51,14 @@ const oneDay = 1000 * 60 * 60 * 24 // one day in milliseconds
 app.use(sessions({
     secret: "secret key i am making up",
     saveUnitialized: true,
-    cookie: {maxAge: oneDay}, // will keep session in cookies for a day, so you don't have to keep logging back in
+    cookie: { maxAge: oneDay }, // will keep session in cookies for a day, so you don't have to keep logging back in
     resave: false
 }))
 
 // mongoDB middleware
 app.use((req, res, next) => {
-  req.models = models
-  next()
+    req.models = models
+    next()
 })
 
 const msid = new msIdExpress.WebAppAuthClientBuilder(appSettings).build()
@@ -62,11 +69,11 @@ app.use('/api/v2', apiv2Router);
 app.use('/api/v3', apiv3Router);
 
 app.get('/signin',
-    msid.signIn({postLoginRedirect: '/'})  
+    msid.signIn({ postLoginRedirect: '/' })
 )
 
 app.get('/signout',
-    msid.signOut({postLogoutRedirect: '/'})  
+    msid.signOut({ postLogoutRedirect: '/' })
 )
 
 app.get('/error', (req, res) => {

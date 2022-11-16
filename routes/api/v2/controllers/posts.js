@@ -4,8 +4,8 @@ var router = express.Router();
 
 import getURLPreview from '../utils/urlPreviews.js';
 
-router.post('/', async function(req, res, next) {
-    try{
+router.post('/', async function (req, res, next) {
+    try {
         const post = new req.models.Post({
             url: req.body.url,
             description: req.body.description,
@@ -15,18 +15,18 @@ router.post('/', async function(req, res, next) {
             username: req.body.username
         })
         await post.save();
-        res.json({"status": "success"})
-    } catch(error) {
+        res.json({ "status": "success" })
+    } catch (error) {
         console.log(error);
-        res.status(500).json({status: "error", error: error});
+        res.status(500).json({ status: "error", error: error });
     }
 })
 
-router.get('/', async function(req, res, next) {
+router.get('/', async function (req, res, next) {
     const posts = await req.models.Post.find();
     let htmlDescArray = [];
-    try{
-        for(let i = 0; i < posts.length; i++) {
+    try {
+        for (let i = 0; i < posts.length; i++) {
             const postHtmlPreview = await getURLPreview(posts[i].url);
             const postJSON = {
                 username: posts[i].username,
@@ -36,10 +36,10 @@ router.get('/', async function(req, res, next) {
             }
             htmlDescArray.push(postJSON);
         }
-        
-    } catch(error) {
+
+    } catch (error) {
         console.log(error);
-        res.status(500).json({status: "error", error: error});
+        res.status(500).json({ status: "error", error: error });
     }
     res.type('json');
     res.send(htmlDescArray);

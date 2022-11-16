@@ -40,3 +40,10 @@ https://test.parsak.me/api/v3/posts?username=kylethayer@uw.edu
 
 URL to Azure deployment:
 https://test.parsak.me/
+
+---------------------------------------------------------------------------------------------------------
+
+# A6
+
+URL to Azure deployment:
+https://test.parsak.me/

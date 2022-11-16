@@ -14,15 +14,16 @@ router.get('/myIdentity', async function (req, res, next) {
                 }
             }
             )
-        } 
+        }
         else {
             res.json({ status: "loggedout" });
         }
-    } 
+    }
     catch (error) {
         console.log(error)
     }
 });
+
 
 
 
