@@ -4,6 +4,7 @@ var router = express.Router();
 
 import getURLPreview from '../utils/urlPreviews.js';
 
+// POST: if users logged in, save post w/ username 
 router.post('/', async function (req, res, next) {
     try {
         if (req.session.isAuthenticated) {
@@ -27,49 +28,7 @@ router.post('/', async function (req, res, next) {
     }
 })
 
-router.post('/like', async function (req, res, next) {
-    let queryPostId = req.body.postID
-    let username = req.session.account.username
-    // find the right post
-    const posts = await req.models.Post.findById(queryPostId);
-    try {
-        if (req.session.isAuthenticated) {
-            if (!posts.likes.includes(username)) {
-                posts.likes.push(username)
-            }
-            await posts.save()
-            res.json({ status: 'success' })
-        } else {
-            res.status(401).json({ status: "error", error: "not logged in" });
-        }
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ status: "error", error: error });
-    }
-});
-
-
-router.post('/unlike', async function (req, res, next) {
-    let queryPostId = req.body.postID
-    let username = req.session.account.username
-    // find the right post
-    const posts = await req.models.Post.findById(queryPostId);
-    try {
-        if (req.session.isAuthenticated) {
-            if (posts.likes.includes(username)) {
-                posts.likes.pop(username)
-            }
-            await posts.save()
-            res.json({ status: 'success' })
-        } else {
-            res.status(401).json({ status: "error", error: "not logged in" });
-        }
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ status: "error", error: error });
-    }
-});
-
+// DELETE: deletes the given post (if you are creator of the post)
 router.delete('/', async function (req, res, next) {
     let queryPostId = req.body.postID
     let usernameSession = req.session.account.username
@@ -93,6 +52,7 @@ router.delete('/', async function (req, res, next) {
     }
 });
 
+// GET: returns all the fields in the Post schema
 router.get('/', async function (req, res, next) {
     const posts = await req.models.Post.find();
     let queryUsername = req.query.username
@@ -116,7 +76,7 @@ router.get('/', async function (req, res, next) {
                     htmlDescArray.push(postJSON);
                 }
             } else
-            // uncommenting this means the user can only see posts they make themselves
+            // uncommenting this means the user can only see posts they make themselves in homepage
             // if (req.session.isAuthenticated) {
             //     let username = req.session.account.username
             //     if (username == posts[i].username) {
@@ -154,5 +114,50 @@ router.get('/', async function (req, res, next) {
     res.type('json');
     res.send(htmlDescArray);
 })
+
+
+// POST: mark the current user as liking the given post
+router.post('/like', async function (req, res, next) {
+    let queryPostId = req.body.postID
+    let username = req.session.account.username
+    // find the right post
+    const posts = await req.models.Post.findById(queryPostId);
+    try {
+        if (req.session.isAuthenticated) {
+            if (!posts.likes.includes(username)) {
+                posts.likes.push(username)
+            }
+            await posts.save()
+            res.json({ status: 'success' })
+        } else {
+            res.status(401).json({ status: "error", error: "not logged in" });
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ status: "error", error: error });
+    }
+});
+
+// GET: mark the current user as unliking the given post
+router.post('/unlike', async function (req, res, next) {
+    let queryPostId = req.body.postID
+    let username = req.session.account.username
+    // find the right post
+    const posts = await req.models.Post.findById(queryPostId);
+    try {
+        if (req.session.isAuthenticated) {
+            if (posts.likes.includes(username)) {
+                posts.likes.pop(username)
+            }
+            await posts.save()
+            res.json({ status: 'success' })
+        } else {
+            res.status(401).json({ status: "error", error: "not logged in" });
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ status: "error", error: error });
+    }
+});
 
 export default router;

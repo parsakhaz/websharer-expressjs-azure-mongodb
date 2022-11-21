@@ -2,7 +2,7 @@ import express from 'express';
 import session from 'express-session';
 var router = express.Router();
 
-/* GET users listing. */
+// returns information about the logged in user
 router.get('/myIdentity', async function (req, res, next) {
     try {
         if (req.session.isAuthenticated) {

@@ -1,6 +1,7 @@
 import express from 'express';
 var router = express.Router();
 
+// GET: returns all the fields in the Comment schema
 router.get('/', async function (req, res, next) {
     const comments = await req.models.Comment.find();
     let queryPostId = req.query.postID
@@ -25,7 +26,7 @@ router.get('/', async function (req, res, next) {
     res.send(commentsArray);
 });
 
-
+// POST: saves comment if user is authenticated
 router.post('/', async function (req, res, next) {
     try {
         if (req.session.isAuthenticated) {
