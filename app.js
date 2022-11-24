@@ -14,17 +14,17 @@ const appSettings = {
         clientSecret:                                                                                                                       "D-I8Q~dzDlYYHN7.LXZXXs2kkXwGyW5pxbHzZbx7"
     },
     // for local host
-    authRoutes: {
-        redirect: "http://localhost:3000/redirect", //note: you can explicitly make this "localhost:3000/redirect" or "examplesite.me/redirect"
-        error: "/error", // the wrapper will redirect to this route in case of any error.
-        unauthorized: "/unauthorized" // the wrapper will redirect to this route in case of unauthorized access attempt.
-    }
-    // for azure hosting 
     // authRoutes: {
-    //     redirect: "https://test.parsak.me/redirect", //note: you can explicitly make this "localhost:3000/redirect" or "examplesite.me/redirect"
+    //     redirect: "http://localhost:3000/redirect", //note: you can explicitly make this "localhost:3000/redirect" or "examplesite.me/redirect"
     //     error: "/error", // the wrapper will redirect to this route in case of any error.
     //     unauthorized: "/unauthorized" // the wrapper will redirect to this route in case of unauthorized access attempt.
     // }
+    // for azure hosting 
+    authRoutes: {
+        redirect: "https://test.parsak.me/redirect", //note: you can explicitly make this "localhost:3000/redirect" or "examplesite.me/redirect"
+        error: "/error", // the wrapper will redirect to this route in case of any error.
+        unauthorized: "/unauthorized" // the wrapper will redirect to this route in case of unauthorized access attempt.
+    }
 };
 
 
