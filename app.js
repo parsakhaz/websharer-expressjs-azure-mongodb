@@ -7,10 +7,11 @@ import models from './models.js';
 import sessions from 'express-session';
 import msIdExpress from 'microsoft-identity-express'
 const appSettings = {
+    // better practice is env variable (for next iteration)
     appCredentials: {
-        clientId: "542b7624-1f17-4cff-9e34-7c778674305e",
-        tenantId: "f6b6dd5b-f02f-441a-99a0-162ac5060bd2",
-        clientSecret: "D-I8Q~dzDlYYHN7.LXZXXs2kkXwGyW5pxbHzZbx7"
+        clientId:                                                                                                                           "542b7624-1f17-4cff-9e34-7c778674305e",
+        tenantId:                                                                                                                           "f6b6dd5b-f02f-441a-99a0-162ac5060bd2",
+        clientSecret:                                                                                                                       "D-I8Q~dzDlYYHN7.LXZXXs2kkXwGyW5pxbHzZbx7"
     },
     // for local host
     authRoutes: {
@@ -43,7 +44,6 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-
 app.use(express.static(path.join(__dirname, 'public')));
 
 // code to setup sessions to work properly
@@ -61,28 +61,26 @@ app.use((req, res, next) => {
     next()
 })
 
+// auth middleware
 const msid = new msIdExpress.WebAppAuthClientBuilder(appSettings).build()
 app.use(msid.initialize())
-
-app.use('/api/v1', apiv1Router);
-app.use('/api/v2', apiv2Router);
-app.use('/api/v3', apiv3Router);
-
 app.get('/signin',
     msid.signIn({ postLoginRedirect: '/' })
 )
-
 app.get('/signout',
     msid.signOut({ postLogoutRedirect: '/' })
 )
-
 app.get('/error', (req, res) => {
     res.status(500).send("Error: Server error")
 })
-
 app.get('/unauthorized', (req, res) => {
     res.status(401).send("Error: Permission was denied")
 })
+
+// api routes
+app.use('/api/v1', apiv1Router);
+app.use('/api/v2', apiv2Router);
+app.use('/api/v3', apiv3Router);
 
 const port = process.env.port || 8000;
 // let port = process.env.PORT;

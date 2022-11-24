@@ -3,7 +3,7 @@ import parser from 'node-html-parser';
 
 // async function that generates url previews
 async function getURLPreview(url) {
-    // to fix xcxx vulnerabilities
+    // to fix xcss vulnerabilities
     const escapeHTML = str => str.replace(/[&<>'"]/g,
         tag => ({
             '&': '&amp;',

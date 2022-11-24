@@ -55,3 +55,8 @@ https://test.parsak.me/
 
 URL to Azure deployment:
 https://test.parsak.me/
+
+### A7
+
+URL to Azure deployment:
+https://test.parsak.me/

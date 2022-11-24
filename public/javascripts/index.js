@@ -58,12 +58,12 @@ async function postUrl() {
         document.getElementById("postStatus").innerText = "Error"
         throw (error)
     }
+    
     document.getElementById("urlInput").value = "";
     document.getElementById("descriptionInput").value = "";
     document.getElementById("url_previews").innerHTML = "";
     document.getElementById("postStatus").innerHTML = "successfully uploaded"
     loadPosts();
-
 }
 
 

@@ -1,11 +1,21 @@
 async function init() {
     await loadIdentity();
     loadUserInfo();
+    
 }
 
 async function saveUserInfo() {
-    //TODO: do an ajax call to save whatever info you want about the user from the user table
-    //see postComment() in the index.js file as an example of how to do this
+    //TODO: do an ajax call to save info about the user from the userInfo table
+    let biography = document.getElementById('user_info_input').value;
+    const urlParams = new URLSearchParams(window.location.search);
+    let username = urlParams.get('user');
+    
+    let responseJson = await fetchJSON(`api/${apiVersion}/userInfo`, {
+        method: "POST",
+        body: { username: username, biography: biography }
+    })
+    
+    loadUserInfo();
 }
 
 async function loadUserInfo() {
@@ -21,8 +31,15 @@ async function loadUserInfo() {
     }
 
     //TODO: do an ajax call to load whatever info you want about the user from the user table
-
+    let userInfoJSON = await fetchJSON(`api/${apiVersion}/userInfo?username=${username}`);
+    let userInfoElement = document.getElementById('user_info_div')
+    let userInfoHTML = userInfoJSON.map(userInfo => {
+        return `${escapeHTML(userInfo.biography)}</br>`
+    }).join("\n");
+    
+    userInfoElement.innerHTML = `${JSON.stringify(userInfoJSON) != '[]' ? userInfoHTML : 'None Available'}`
     loadUserInfoPosts(username)
+
 }
 
 
@@ -52,6 +69,16 @@ async function deletePost(postID) {
     let responseJson = await fetchJSON(`api/${apiVersion}/posts`, {
         method: "DELETE",
         body: { postID: postID }
+    })
+    loadUserInfo();
+}
+
+async function deleteUserInfo() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const username = urlParams.get('user');
+    let deleteInfo = await fetchJSON(`api/${apiVersion}/userInfo?username=${username}`, { 
+        method: "DELETE",
+        body: { username: username }
     })
     loadUserInfo();
 }
